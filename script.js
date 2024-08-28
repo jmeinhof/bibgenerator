@@ -1,21 +1,4 @@
-function generateAndCopyBibTeX() {
-    // Call parseText to ensure the BibTeX is up to date
-    parseText();
-
-    // Select and copy the BibTeX output
-    const bibtexOutput = document.getElementById('bibtex-output');
-    const range = document.createRange();
-    range.selectNode(bibtexOutput);
-    window.getSelection().removeAllRanges();
-    window.getSelection().addRange(range);
-
-    try {
-        document.execCommand('copy');
-        alert("BibTeX copied to clipboard!");
-    } catch(err) {
-        alert("Failed to copy BibTeX.");
-    }
-}
+document.getElementById('input-text').addEventListener('input', parseText);
 
 function parseText() {
     const inputText = document.getElementById('input-text').value;
@@ -51,5 +34,5 @@ function parseText() {
     bibtex += `  year = {${year}}\n`;
     bibtex += `}`;
 
-    document.getElementById('bibtex-output').textContent = bibtex;
+    document.getElementById('bibtex-output').value = bibtex;
 }
