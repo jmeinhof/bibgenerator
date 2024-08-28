@@ -1,3 +1,7 @@
+document.getElementById('author').addEventListener('input', generateBibTeX);
+document.getElementById('title').addEventListener('input', generateBibTeX);
+document.getElementById('year').addEventListener('input', generateBibTeX);
+
 function generateBibTeX() {
     const author = document.getElementById('author').value;
     const title = document.getElementById('title').value;
