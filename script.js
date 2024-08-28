@@ -1,4 +1,21 @@
-document.getElementById('input-text').addEventListener('input', parseText);
+function generateAndCopyBibTeX() {
+    // Call parseText to ensure the BibTeX is up to date
+    parseText();
+
+    // Select and copy the BibTeX output
+    const bibtexOutput = document.getElementById('bibtex-output');
+    const range = document.createRange();
+    range.selectNode(bibtexOutput);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+
+    try {
+        document.execCommand('copy');
+        alert("BibTeX copied to clipboard!");
+    } catch(err) {
+        alert("Failed to copy BibTeX.");
+    }
+}
 
 function parseText() {
     const inputText = document.getElementById('input-text').value;
@@ -34,21 +51,5 @@ function parseText() {
     bibtex += `  year = {${year}}\n`;
     bibtex += `}`;
 
-    document.getElementById('bibtex-output').value = bibtex;
-}
-
-function generateAndCopyBibTeX() {
-    // Call parseText to ensure the BibTeX is up to date
-    parseText();
-
-    // Select and copy the BibTeX output
-    const bibtexOutput = document.getElementById('bibtex-output');
-    bibtexOutput.select();
-    bibtexOutput.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the selected text to the clipboard
-    document.execCommand('copy');
-
-    // Optionally, you can provide feedback to the user
-    alert("BibTeX copied to clipboard!");
+    document.getElementById('bibtex-output').textContent = bibtex;
 }
