@@ -3,33 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Web Page</title>
+    <title>Resizable and Movable Rectangles with CSV Upload/Download</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             position: relative;
+            height: 100vh;
+            width: 100vw;
+            background-color: #f0f0f0;
         }
         .rectangle {
-            width: 100px;
+            width: 150px;
             height: 100px;
             background-color: green;
             position: absolute;
-            cursor: pointer;
-            border: 2px solid transparent;
-            box-sizing: border-box;
-        }
-        .rectangle:hover {
-            border: 2px solid #000; /* Show border on hover */
-        }
-        #rect1 {
-            left: 50px;
-            top: 50px;
+            cursor: move;
+            border: 2px solid #006400;
         }
         #rect2 {
-            left: 200px;
-            top: 50px;
+            top: 100px;
+            left: 300px;
         }
         .red-dot {
             width: 10px;
@@ -37,19 +35,43 @@
             background-color: red;
             border-radius: 50%;
             position: absolute;
+            transform: translate(-50%, -50%);
         }
         #chairBtn {
             position: fixed;
-            bottom: 10px;
-            left: 10px;
-            padding: 10px;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
             cursor: pointer;
-            background-color: lightgray;
+            background-color: #ddd;
             border: none;
+            border-radius: 5px;
             font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s;
         }
         #chairBtn.active {
-            background-color: lightgreen;
+            background-color: #90ee90;
+        }
+        #controls {
+            position: fixed;
+            bottom: 20px;
+            left: 150px;
+            display: flex;
+            gap: 10px;
+        }
+        #uploadBtn, #downloadBtn {
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #ddd;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            transition: background-color 0.3s;
+        }
+        #fileInput {
+            display: none;
         }
     </style>
 </head>
@@ -58,17 +80,25 @@
     <div id="rect1" class="rectangle"></div>
     <div id="rect2" class="rectangle"></div>
     <button id="chairBtn">Chair</button>
+    
+    <div id="controls">
+        <button id="uploadBtn">Upload CSV</button>
+        <input type="file" id="fileInput" accept=".csv">
+        <button id="downloadBtn">Download CSV</button>
+    </div>
 
     <script>
+        // Chair Button Functionality
+        const chairBtn = document.getElementById('chairBtn');
         let activeChair = false;
 
-        document.getElementById('chairBtn').addEventListener('click', function() {
+        chairBtn.addEventListener('click', () => {
             activeChair = !activeChair;
-            this.classList.toggle('active');
+            chairBtn.classList.toggle('active');
         });
 
-        document.addEventListener('click', function(e) {
-            if (activeChair) {
+        document.addEventListener('click', (e) => {
+            if (activeChair && !e.target.classList.contains('rectangle') && e.target !== chairBtn) {
                 const dot = document.createElement('div');
                 dot.className = 'red-dot';
                 dot.style.left = e.pageX + 'px';
@@ -77,86 +107,236 @@
             }
         });
 
-        // Enable dragging for the rectangles
+        // Movable and Resizable Rectangles
         const rectangles = document.querySelectorAll('.rectangle');
-        rectangles.forEach(rectangle => {
-            let isResizing = false;
+        const minWidth = 50;
+        const minHeight = 50;
+
+        rectangles.forEach(rect => {
             let isDragging = false;
-            let currentRect = null;
+            let isResizing = false;
+            let currentResizer;
+            let startX, startY, startWidth, startHeight, startLeft, startTop;
 
-            rectangle.addEventListener('mousedown', function(e) {
-                if (isResizing) return;
+            // Create resizer elements
+            const resizers = {};
+            const resizerPositions = ['top-left', 'top-right', 'bottom-left', 'bottom-right', 'top', 'right', 'bottom', 'left'];
 
-                currentRect = this;
-                let shiftX = e.clientX - currentRect.getBoundingClientRect().left;
-                let shiftY = e.clientY - currentRect.getBoundingClientRect().top;
+            resizerPositions.forEach(pos => {
+                const resizer = document.createElement('div');
+                resizer.className = 'resizer ' + pos;
+                resizer.style.position = 'absolute';
+                resizer.style.width = '10px';
+                resizer.style.height = '10px';
+                resizer.style.background = 'transparent';
+                resizer.style.cursor = getCursor(pos);
+                positionResizer(resizer, pos);
+                rect.appendChild(resizer);
+                resizers[pos] = resizer;
 
-                function moveAt(pageX, pageY) {
-                    currentRect.style.left = pageX - shiftX + 'px';
-                    currentRect.style.top = pageY - shiftY + 'px';
-                }
-
-                function onMouseMove(event) {
-                    moveAt(event.pageX, event.pageY);
-                }
-
-                document.addEventListener('mousemove', onMouseMove);
-
-                currentRect.onmouseup = function() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    currentRect.onmouseup = null;
-                    isDragging = false;
-                };
-
-                isDragging = true;
-            });
-
-            rectangle.ondragstart = function() {
-                return false;
-            };
-
-            // Resizing functionality
-            rectangle.addEventListener('mousemove', function(e) {
-                const rect = this.getBoundingClientRect();
-                const offset = 5;
-                if (e.clientX >= rect.right - offset && e.clientY >= rect.bottom - offset) {
-                    this.style.cursor = 'se-resize';
+                resizer.addEventListener('mousedown', function(e) {
+                    e.stopPropagation();
                     isResizing = true;
-                } else {
-                    this.style.cursor = isDragging ? 'grabbing' : 'pointer';
-                    isResizing = false;
-                }
+                    currentResizer = pos;
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseInt(document.defaultView.getComputedStyle(rect).width, 10);
+                    startHeight = parseInt(document.defaultView.getComputedStyle(rect).height, 10);
+                    startLeft = rect.offsetLeft;
+                    startTop = rect.offsetTop;
+
+                    document.addEventListener('mousemove', resizeMouseMove);
+                    document.addEventListener('mouseup', stopResize);
+                });
             });
 
-            rectangle.addEventListener('mousedown', function(e) {
+            // Dragging functionality
+            rect.addEventListener('mousedown', function(e) {
+                if (e.target.classList.contains('resizer')) return;
+                isDragging = true;
+                startX = e.clientX - rect.offsetLeft;
+                startY = e.clientY - rect.offsetTop;
+
+                document.addEventListener('mousemove', dragMouseMove);
+                document.addEventListener('mouseup', stopDrag);
+            });
+
+            function dragMouseMove(e) {
+                if (!isDragging) return;
+                rect.style.left = e.clientX - startX + 'px';
+                rect.style.top = e.clientY - startY + 'px';
+            }
+
+            function stopDrag() {
+                isDragging = false;
+                document.removeEventListener('mousemove', dragMouseMove);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+
+            function resizeMouseMove(e) {
                 if (!isResizing) return;
 
-                const rect = this;
-                let startX = e.clientX;
-                let startY = e.clientY;
-                let startWidth = rect.offsetWidth;
-                let startHeight = rect.offsetHeight;
+                let dx = e.clientX - startX;
+                let dy = e.clientY - startY;
 
-                function onMouseMove(event) {
-                    const newWidth = startWidth + (event.clientX - startX);
-                    const newHeight = startHeight + (event.clientY - startY);
-
-                    rect.style.width = newWidth + 'px';
-                    rect.style.height = newHeight + 'px';
+                switch (currentResizer) {
+                    case 'top-left':
+                        rect.style.width = startWidth - dx + 'px';
+                        rect.style.height = startHeight - dy + 'px';
+                        rect.style.left = startLeft + dx + 'px';
+                        rect.style.top = startTop + dy + 'px';
+                        break;
+                    case 'top-right':
+                        rect.style.width = startWidth + dx + 'px';
+                        rect.style.height = startHeight - dy + 'px';
+                        rect.style.top = startTop + dy + 'px';
+                        break;
+                    case 'bottom-left':
+                        rect.style.width = startWidth - dx + 'px';
+                        rect.style.height = startHeight + dy + 'px';
+                        rect.style.left = startLeft + dx + 'px';
+                        break;
+                    case 'bottom-right':
+                        rect.style.width = startWidth + dx + 'px';
+                        rect.style.height = startHeight + dy + 'px';
+                        break;
+                    case 'top':
+                        rect.style.height = startHeight - dy + 'px';
+                        rect.style.top = startTop + dy + 'px';
+                        break;
+                    case 'right':
+                        rect.style.width = startWidth + dx + 'px';
+                        break;
+                    case 'bottom':
+                        rect.style.height = startHeight + dy + 'px';
+                        break;
+                    case 'left':
+                        rect.style.width = startWidth - dx + 'px';
+                        rect.style.left = startLeft + dx + 'px';
+                        break;
                 }
 
-                document.addEventListener('mousemove', onMouseMove);
+                // Enforce minimum size
+                if (parseInt(rect.style.width) < minWidth) rect.style.width = minWidth + 'px';
+                if (parseInt(rect.style.height) < minHeight) rect.style.height = minHeight + 'px';
+            }
 
-                document.onmouseup = function() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    document.onmouseup = null;
-                    isResizing = false;
-                };
+            function stopResize() {
+                isResizing = false;
+                document.removeEventListener('mousemove', resizeMouseMove);
+                document.removeEventListener('mouseup', stopResize);
+            }
 
-                e.stopPropagation(); // Prevent drag event while resizing
-            });
+            function getCursor(pos) {
+                switch (pos) {
+                    case 'top-left':
+                    case 'bottom-right':
+                        return 'nwse-resize';
+                    case 'top-right':
+                    case 'bottom-left':
+                        return 'nesw-resize';
+                    case 'top':
+                    case 'bottom':
+                        return 'ns-resize';
+                    case 'left':
+                    case 'right':
+                        return 'ew-resize';
+                }
+            }
 
+            function positionResizer(resizer, pos) {
+                switch (pos) {
+                    case 'top-left':
+                        resizer.style.left = '-5px';
+                        resizer.style.top = '-5px';
+                        break;
+                    case 'top-right':
+                        resizer.style.right = '-5px';
+                        resizer.style.top = '-5px';
+                        break;
+                    case 'bottom-left':
+                        resizer.style.left = '-5px';
+                        resizer.style.bottom = '-5px';
+                        break;
+                    case 'bottom-right':
+                        resizer.style.right = '-5px';
+                        resizer.style.bottom = '-5px';
+                        break;
+                    case 'top':
+                        resizer.style.top = '-5px';
+                        resizer.style.left = 'calc(50% - 5px)';
+                        break;
+                    case 'right':
+                        resizer.style.right = '-5px';
+                        resizer.style.top = 'calc(50% - 5px)';
+                        break;
+                    case 'bottom':
+                        resizer.style.bottom = '-5px';
+                        resizer.style.left = 'calc(50% - 5px)';
+                        break;
+                    case 'left':
+                        resizer.style.left = '-5px';
+                        resizer.style.top = 'calc(50% - 5px)';
+                        break;
+                }
+            }
         });
+
+        // CSV Upload and Download Functionality
+        const uploadBtn = document.getElementById('uploadBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const fileInput = document.getElementById('fileInput');
+
+        // Download CSV
+        downloadBtn.addEventListener('click', () => {
+            const csvContent = "data:text/csv;charset=utf-8," + rectanglesArrayToCSV();
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "rectangles_positions.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Upload CSV
+        uploadBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const csv = event.target.result;
+                    csvToRectanglesArray(csv);
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        function rectanglesArrayToCSV() {
+            let csv = "id,left,top,width,height\n";
+            rectangles.forEach(rect => {
+                csv += `${rect.id},${rect.style.left},${rect.style.top},${rect.style.width},${rect.style.height}\n`;
+            });
+            return csv;
+        }
+
+        function csvToRectanglesArray(csv) {
+            const lines = csv.split("\n").slice(1); // Skip header
+            lines.forEach(line => {
+                if (line.trim()) {
+                    const [id, left, top, width, height] = line.split(",");
+                    const rect = document.getElementById(id.trim());
+                    rect.style.left = left.trim();
+                    rect.style.top = top.trim();
+                    rect.style.width = width.trim();
+                    rect.style.height = height.trim();
+                }
+            });
+        }
     </script>
 </body>
 </html>
