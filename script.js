@@ -1,3 +1,5 @@
+document.getElementById('input-text').addEventListener('input', parseText);
+
 function parseText() {
     const inputText = document.getElementById('input-text').value;
     let author = '';
