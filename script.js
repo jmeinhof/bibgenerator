@@ -36,3 +36,19 @@ function parseText() {
 
     document.getElementById('bibtex-output').value = bibtex;
 }
+
+function generateAndCopyBibTeX() {
+    // Call parseText to ensure the BibTeX is up to date
+    parseText();
+
+    // Select and copy the BibTeX output
+    const bibtexOutput = document.getElementById('bibtex-output');
+    bibtexOutput.select();
+    bibtexOutput.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the selected text to the clipboard
+    document.execCommand('copy');
+
+    // Optionally, you can provide feedback to the user
+    alert("BibTeX copied to clipboard!");
+}
