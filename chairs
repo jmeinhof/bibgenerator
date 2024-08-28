@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Web Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .rectangle {
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            position: absolute;
+            cursor: pointer;
+        }
+        #rect1 {
+            left: 50px;
+            top: 50px;
+        }
+        #rect2 {
+            left: 200px;
+            top: 50px;
+        }
+        .red-dot {
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+        }
+        #chairBtn {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: lightgray;
+            border: none;
+            font-size: 16px;
+        }
+        #chairBtn.active {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="rect1" class="rectangle"></div>
+    <div id="rect2" class="rectangle"></div>
+    <button id="chairBtn">Chair</button>
+
+    <script>
+        let activeChair = false;
+
+        document.getElementById('chairBtn').addEventListener('click', function() {
+            activeChair = !activeChair;
+            this.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (activeChair) {
+                const dot = document.createElement('div');
+                dot.className = 'red-dot';
+                dot.style.left = e.pageX + 'px';
+                dot.style.top = e.pageY + 'px';
+                document.body.appendChild(dot);
+            }
+        });
+
+        // Enable dragging for the rectangles
+        const rectangles = document.querySelectorAll('.rectangle');
+        rectangles.forEach(rectangle => {
+            rectangle.addEventListener('mousedown', function(e) {
+                const rect = this;
+                let shiftX = e.clientX - rect.getBoundingClientRect().left;
+                let shiftY = e.clientY - rect.getBoundingClientRect().top;
+
+                function moveAt(pageX, pageY) {
+                    rect.style.left = pageX - shiftX + 'px';
+                    rect.style.top = pageY - shiftY + 'px';
+                }
+
+                function onMouseMove(event) {
+                    moveAt(event.pageX, event.pageY);
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+
+                rect.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    rect.onmouseup = null;
+                };
+            });
+
+            rectangle.ondragstart = function() {
+                return false;
+            };
+        });
+    </script>
+</body>
+</html>
