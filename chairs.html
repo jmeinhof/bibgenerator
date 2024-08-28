@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resizable and Movable Rectangles with CSV Upload/Download</title>
+    <title>Resizable and Movable Rectangles with Chairs and CSV</title>
     <style>
         * {
             box-sizing: border-box;
@@ -29,13 +29,20 @@
             top: 100px;
             left: 300px;
         }
-        .red-dot {
-            width: 10px;
-            height: 10px;
+        .chair {
+            width: 30px;
+            height: 30px;
             background-color: red;
             border-radius: 50%;
             position: absolute;
             transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
         }
         #chairBtn {
             position: fixed;
@@ -91,6 +98,7 @@
         // Chair Button Functionality
         const chairBtn = document.getElementById('chairBtn');
         let activeChair = false;
+        let chairCount = 0;
 
         chairBtn.addEventListener('click', () => {
             activeChair = !activeChair;
@@ -98,14 +106,23 @@
         });
 
         document.addEventListener('click', (e) => {
-            if (activeChair && !e.target.classList.contains('rectangle') && e.target !== chairBtn) {
-                const dot = document.createElement('div');
-                dot.className = 'red-dot';
-                dot.style.left = e.pageX + 'px';
-                dot.style.top = e.pageY + 'px';
-                document.body.appendChild(dot);
+            if (activeChair && !e.target.classList.contains('rectangle') && e.target !== chairBtn && !e.target.classList.contains('chair')) {
+                addChair(e.pageX, e.pageY);
+            } else if (e.target.classList.contains('chair')) {
+                e.target.remove();
             }
         });
+
+        function addChair(x, y) {
+            chairCount++;
+            const chair = document.createElement('div');
+            chair.className = 'chair';
+            chair.textContent = chairCount;
+            chair.style.left = x + 'px';
+            chair.style.top = y + 'px';
+            chair.setAttribute('data-chair-number', chairCount);
+            document.body.appendChild(chair);
+        }
 
         // Movable and Resizable Rectangles
         const rectangles = document.querySelectorAll('.rectangle');
@@ -289,11 +306,11 @@
 
         // Download CSV
         downloadBtn.addEventListener('click', () => {
-            const csvContent = "data:text/csv;charset=utf-8," + rectanglesArrayToCSV();
+            const csvContent = "data:text/csv;charset=utf-8," + rectanglesAndChairsToCSV();
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "rectangles_positions.csv");
+            link.setAttribute("download", "positions.csv");
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -310,30 +327,37 @@
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const csv = event.target.result;
-                    csvToRectanglesArray(csv);
+                    csvToRectanglesAndChairs(csv);
                 };
                 reader.readAsText(file);
             }
         });
 
-        function rectanglesArrayToCSV() {
-            let csv = "id,left,top,width,height\n";
+        function rectanglesAndChairsToCSV() {
+            let csv = "type,id,left,top,width,height\n";
             rectangles.forEach(rect => {
-                csv += `${rect.id},${rect.style.left},${rect.style.top},${rect.style.width},${rect.style.height}\n`;
+                csv += `rectangle,${rect.id},${rect.style.left},${rect.style.top},${rect.style.width},${rect.style.height}\n`;
+            });
+            document.querySelectorAll('.chair').forEach(chair => {
+                csv += `chair,${chair.getAttribute('data-chair-number')},${chair.style.left},${chair.style.top},,,\n`;
             });
             return csv;
         }
 
-        function csvToRectanglesArray(csv) {
+        function csvToRectanglesAndChairs(csv) {
             const lines = csv.split("\n").slice(1); // Skip header
             lines.forEach(line => {
                 if (line.trim()) {
-                    const [id, left, top, width, height] = line.split(",");
-                    const rect = document.getElementById(id.trim());
-                    rect.style.left = left.trim();
-                    rect.style.top = top.trim();
-                    rect.style.width = width.trim();
-                    rect.style.height = height.trim();
+                    const [type, id, left, top, width, height] = line.split(",");
+                    if (type === 'rectangle') {
+                        const rect = document.getElementById(id.trim());
+                        rect.style.left = left.trim();
+                        rect.style.top = top.trim();
+                        rect.style.width = width.trim();
+                        rect.style.height = height.trim();
+                    } else if (type === 'chair') {
+                        addChair(parseInt(left.trim()), parseInt(top.trim()));
+                    }
                 }
             });
         }
