@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-    <h1>BibTeX Generator from Text1</h1>
+    <h1>BibTeX Generator from Text</h1>
     <p>Choose an option below:</p>
     
     <button id="buttonA" class="option-button" onclick="setOption('A')">A (Author)</button>
@@ -44,8 +44,10 @@
     <input type="text" id="year" placeholder="Enter publication year"><br><br>
 
     <h2>Generated BibTeX</h2>
-    <button type="button" onclick="copyBibTeX()">Copy BibTeX</button><br><br>
-    <textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
+<div id="copy-notification" style="display: none; color: green; margin-top: 10px;">BibTeX copied to clipboard!</div>
+<button type="button" onclick="copyBibTeX()">Copy BibTeX</button><br><br>
+<textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
+
 
     <script src="script.js"></script>
 </body>
