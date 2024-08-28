@@ -98,7 +98,6 @@
         // Chair Button Functionality
         const chairBtn = document.getElementById('chairBtn');
         let activeChair = false;
-        let chairCount = 0;
 
         chairBtn.addEventListener('click', () => {
             activeChair = !activeChair;
@@ -110,18 +109,25 @@
                 addChair(e.pageX, e.pageY);
             } else if (e.target.classList.contains('chair')) {
                 e.target.remove();
+                renumberChairs();
             }
         });
 
         function addChair(x, y) {
-            chairCount++;
             const chair = document.createElement('div');
             chair.className = 'chair';
-            chair.textContent = chairCount;
             chair.style.left = x + 'px';
             chair.style.top = y + 'px';
-            chair.setAttribute('data-chair-number', chairCount);
             document.body.appendChild(chair);
+            renumberChairs();
+        }
+
+        function renumberChairs() {
+            const chairs = document.querySelectorAll('.chair');
+            chairs.forEach((chair, index) => {
+                chair.textContent = index + 1;
+                chair.setAttribute('data-chair-number', index + 1);
+            });
         }
 
         // Movable and Resizable Rectangles
@@ -345,6 +351,9 @@
         }
 
         function csvToRectanglesAndChairs(csv) {
+            // Clear existing chairs
+            document.querySelectorAll('.chair').forEach(chair => chair.remove());
+
             const lines = csv.split("\n").slice(1); // Skip header
             lines.forEach(line => {
                 if (line.trim()) {
