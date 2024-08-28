@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BibTeX Generator</title>
+</head>
+<body>
+    <h1>BibTeX Generator from Text</h1>
+    <p>Paste the citation text below:</p>
+    <textarea id="input-text" rows="5" cols="50" placeholder="Paste your reference here"></textarea><br><br>
+    
+    <button type="button" onclick="parseText()">Generate BibTeX</button>
+
+    <h2>Generated BibTeX</h2>
+    <textarea id="bibtex-output" rows="10" cols="50"></textarea>
+
+    <script src="script.js"></script>
+</body>
+</html>
