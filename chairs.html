@@ -17,6 +17,11 @@
             background-color: green;
             position: absolute;
             cursor: pointer;
+            border: 2px solid transparent;
+            box-sizing: border-box;
+        }
+        .rectangle:hover {
+            border: 2px solid #000; /* Show border on hover */
         }
         #rect1 {
             left: 50px;
@@ -75,14 +80,20 @@
         // Enable dragging for the rectangles
         const rectangles = document.querySelectorAll('.rectangle');
         rectangles.forEach(rectangle => {
+            let isResizing = false;
+            let isDragging = false;
+            let currentRect = null;
+
             rectangle.addEventListener('mousedown', function(e) {
-                const rect = this;
-                let shiftX = e.clientX - rect.getBoundingClientRect().left;
-                let shiftY = e.clientY - rect.getBoundingClientRect().top;
+                if (isResizing) return;
+
+                currentRect = this;
+                let shiftX = e.clientX - currentRect.getBoundingClientRect().left;
+                let shiftY = e.clientY - currentRect.getBoundingClientRect().top;
 
                 function moveAt(pageX, pageY) {
-                    rect.style.left = pageX - shiftX + 'px';
-                    rect.style.top = pageY - shiftY + 'px';
+                    currentRect.style.left = pageX - shiftX + 'px';
+                    currentRect.style.top = pageY - shiftY + 'px';
                 }
 
                 function onMouseMove(event) {
@@ -91,15 +102,60 @@
 
                 document.addEventListener('mousemove', onMouseMove);
 
-                rect.onmouseup = function() {
+                currentRect.onmouseup = function() {
                     document.removeEventListener('mousemove', onMouseMove);
-                    rect.onmouseup = null;
+                    currentRect.onmouseup = null;
+                    isDragging = false;
                 };
+
+                isDragging = true;
             });
 
             rectangle.ondragstart = function() {
                 return false;
             };
+
+            // Resizing functionality
+            rectangle.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const offset = 5;
+                if (e.clientX >= rect.right - offset && e.clientY >= rect.bottom - offset) {
+                    this.style.cursor = 'se-resize';
+                    isResizing = true;
+                } else {
+                    this.style.cursor = isDragging ? 'grabbing' : 'pointer';
+                    isResizing = false;
+                }
+            });
+
+            rectangle.addEventListener('mousedown', function(e) {
+                if (!isResizing) return;
+
+                const rect = this;
+                let startX = e.clientX;
+                let startY = e.clientY;
+                let startWidth = rect.offsetWidth;
+                let startHeight = rect.offsetHeight;
+
+                function onMouseMove(event) {
+                    const newWidth = startWidth + (event.clientX - startX);
+                    const newHeight = startHeight + (event.clientY - startY);
+
+                    rect.style.width = newWidth + 'px';
+                    rect.style.height = newHeight + 'px';
+                }
+
+                document.addEventListener('mousemove', onMouseMove);
+
+                document.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.onmouseup = null;
+                    isResizing = false;
+                };
+
+                e.stopPropagation(); // Prevent drag event while resizing
+            });
+
         });
     </script>
 </body>
