@@ -1,10 +1,7 @@
-document.getElementById('input-text').addEventListener('input', parseText);
-
-function parseText() {
-    const inputText = document.getElementById('input-text').value;
-    let author = '';
-    let title = '';
-    let year = '';
+function generateBibTeX() {
+    const author = document.getElementById('author').value;
+    const title = document.getElementById('title').value;
+    const year = document.getElementById('year').value;
 
     // Create a simple BibTeX entry
     let bibtex = `@article{,\n`;
