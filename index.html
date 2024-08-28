@@ -4,17 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BibTeX Generator</title>
+    <style>
+        .option-button {
+            padding: 10px 20px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+        .option-button.active {
+            background-color: #007BFF;
+            color: white;
+            border: 1px solid #0056b3;
+        }
+    </style>
 </head>
 <body>
     <h1>BibTeX Generator from Text</h1>
     <p>Choose an option below:</p>
     
-    <label>
-        <input type="radio" name="option" id="optionA" value="A"> A (Author)
-    </label>
-    <label>
-        <input type="radio" name="option" id="optionB" value="B"> B (Authority)
-    </label>
+    <button id="buttonA" class="option-button" onclick="setOption('A')">A (Author)</button>
+    <button id="buttonB" class="option-button" onclick="setOption('B')">B (Authority)</button>
     <br><br>
 
     <div id="author-input" style="display: none;">
@@ -33,8 +43,6 @@
     <label for="year">Year: </label>
     <input type="text" id="year" placeholder="Enter publication year"><br><br>
 
-    <button type="button" onclick="generateBibTeX()">Generate BibTeX</button><br><br>
-    
     <h2>Generated BibTeX</h2>
     <textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
 
