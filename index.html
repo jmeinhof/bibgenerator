@@ -7,10 +7,18 @@
 </head>
 <body>
     <h1>BibTeX Generator from Text</h1>
-    <p>Paste the citation text below:</p>
-    <textarea id="input-text" rows="5" cols="50" placeholder="Paste your reference here"></textarea><br><br>
+    <p>Enter the citation details below:</p>
     
-    <button type="button" onclick="parseText()">Generate BibTeX</button><br><br>
+    <label for="author">Author:</label><br>
+    <input type="text" id="author" placeholder="Enter author name(s)"><br><br>
+    
+    <label for="title">Title:</label><br>
+    <input type="text" id="title" placeholder="Enter title of the paper"><br><br>
+    
+    <label for="year">Year:</label><br>
+    <input type="text" id="year" placeholder="Enter publication year"><br><br>
+    
+    <button type="button" onclick="generateBibTeX()">Generate BibTeX</button><br><br>
 
     <h2>Generated BibTeX</h2>
     <textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
