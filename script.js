@@ -1,4 +1,8 @@
-let selectedOption = null;
+let selectedOption = 'A'; // Set default option to 'A'
+
+window.onload = function() {
+    setOption('A'); // Automatically select "A" on page load
+};
 
 function setOption(option) {
     const buttonA = document.getElementById('buttonA');
@@ -22,11 +26,6 @@ function setOption(option) {
 
     generateBibTeX(); // Update BibTeX output whenever the option is changed
 }
-
-document.getElementById('author').addEventListener('input', generateBibTeX);
-document.getElementById('authority').addEventListener('input', generateBibTeX);
-document.getElementById('title').addEventListener('input', generateBibTeX);
-document.getElementById('year').addEventListener('input', generateBibTeX);
 
 function generateBibTeX() {
     let authorOrAuthority = '';
