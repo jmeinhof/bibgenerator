@@ -1,19 +1,21 @@
-document.getElementById('optionA').addEventListener('change', handleOptionChange);
-document.getElementById('optionB').addEventListener('change', handleOptionChange);
-document.getElementById('author').addEventListener('input', generateBibTeX);
-document.getElementById('authority').addEventListener('input', generateBibTeX);
-document.getElementById('title').addEventListener('input', generateBibTeX);
-document.getElementById('year').addEventListener('input', generateBibTeX);
+let selectedOption = null;
 
-function handleOptionChange() {
-    const optionA = document.getElementById('optionA').checked;
+function setOption(option) {
+    const buttonA = document.getElementById('buttonA');
+    const buttonB = document.getElementById('buttonB');
     const authorInput = document.getElementById('author-input');
     const authorityInput = document.getElementById('authority-input');
-    
-    if (optionA) {
+
+    if (option === 'A') {
+        selectedOption = 'A';
+        buttonA.classList.add('active');
+        buttonB.classList.remove('active');
         authorInput.style.display = 'block';
         authorityInput.style.display = 'none';
-    } else {
+    } else if (option === 'B') {
+        selectedOption = 'B';
+        buttonA.classList.remove('active');
+        buttonB.classList.add('active');
         authorInput.style.display = 'none';
         authorityInput.style.display = 'block';
     }
@@ -21,13 +23,17 @@ function handleOptionChange() {
     generateBibTeX(); // Update BibTeX output whenever the option is changed
 }
 
+document.getElementById('author').addEventListener('input', generateBibTeX);
+document.getElementById('authority').addEventListener('input', generateBibTeX);
+document.getElementById('title').addEventListener('input', generateBibTeX);
+document.getElementById('year').addEventListener('input', generateBibTeX);
+
 function generateBibTeX() {
-    const optionA = document.getElementById('optionA').checked;
     let authorOrAuthority = '';
     
-    if (optionA) {
+    if (selectedOption === 'A') {
         authorOrAuthority = document.getElementById('author').value;
-    } else {
+    } else if (selectedOption === 'B') {
         authorOrAuthority = document.getElementById('authority').value;
     }
     
