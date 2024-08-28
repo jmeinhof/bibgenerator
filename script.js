@@ -53,5 +53,4 @@ function copyBibTeX() {
     const bibtexOutput = document.getElementById('bibtex-output');
     bibtexOutput.select();
     document.execCommand('copy');
-    alert('BibTeX copied to clipboard!');
 }
