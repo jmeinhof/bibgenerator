@@ -5,22 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BibTeX Generator</title>
     <style>
-        .container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .button-column {
-            flex: 1;
-        }
-
-        .input-column {
-            flex: 2;
-            display: flex;
-            flex-direction: column;
-        }
-
         .option-button {
             padding: 10px 20px;
             margin-right: 10px;
@@ -28,47 +12,36 @@
             background-color: #f0f0f0;
             cursor: pointer;
         }
-
         .option-button.active {
             background-color: #007BFF;
             color: white;
             border: 1px solid #0056b3;
         }
-
-        .input-group {
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
     <h1>BibTeX Generator from Text</h1>
-    <div class="container">
-        <div class="button-column">
-            <button id="buttonA" class="option-button" onclick="setOption('A')">A (Author)</button>
-            <button id="buttonB" class="option-button" onclick="setOption('B')">B (Authority)</button>
-        </div>
-        <div class="input-column">
-            <div id="author-input" class="input-group">
-                <label for="author">Author: </label>
-                <textarea id="author" rows="2" cols="10" placeholder="Enter author name(s)"></textarea>
-            </div>
-            <div id="authority-input" class="input-group" style="display: none;">
-                <label for="authority">Authority: </label>
-                <textarea id="authority" rows="2" cols="10" placeholder="Enter authority name(s)"></textarea>
-            </div>
-            <div class="input-group">
-                <label for="title">Title: </label>
-                <input type="text" id="title" placeholder="Enter title of the paper">
-            </div>
-            <div class="input-group">
-                <label for="year">Year: </label>
-                <input type="text" id="year" placeholder="Enter publication year">
-            </div>
-        </div>
+    <p>Choose an option below:</p>
+    
+    <button id="buttonA" class="option-button" onclick="setOption('A')">A (Author)</button>
+    <button id="buttonB" class="option-button" onclick="setOption('B')">B (Authority)</button>
+    <br><br>
+
+    <div id="author-input" style="display: none;">
+        <label for="author">Author: </label>
+        <textarea id="author" rows="2" cols="10" placeholder="Enter author name(s)"></textarea><br><br>
     </div>
 
-    <button type="button" onclick="generateBibTeX()">Generate BibTeX</button>
-    <button type="button" onclick="copyBibTeX()">Copy BibTeX</button><br><br>
+    <div id="authority-input" style="display: none;">
+        <label for="authority">Authority: </label>
+        <textarea id="authority" rows="2" cols="10" placeholder="Enter authority name(s)"></textarea><br><br>
+    </div>
+    
+    <label for="title">Title: </label>
+    <input type="text" id="title" placeholder="Enter title of the paper"><br><br>
+    
+    <label for="year">Year: </label>
+    <input type="text" id="year" placeholder="Enter publication year"><br><br>
 
     <h2>Generated BibTeX</h2>
     <textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
