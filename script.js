@@ -60,5 +60,14 @@ function copyBibTeX() {
     const bibtexOutput = document.getElementById('bibtex-output');
     bibtexOutput.select();
     document.execCommand('copy');
-    alert('BibTeX copied to clipboard!'); // Optional: notify the user that the text has been copied
+
+    // Show the notification
+    const notification = document.getElementById('copy-notification');
+    notification.style.display = 'block';
+
+    // Fade out the notification after 2 seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 2000);
 }
+
