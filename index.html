@@ -7,11 +7,25 @@
 </head>
 <body>
     <h1>BibTeX Generator from Text</h1>
-    <p>Enter the citation details below:</p>
+    <p>Choose an option below:</p>
     
-    <label for="author">Author: </label>
-    <!-- <input type="text" id="author" placeholder="Enter author name(s)"><br><br> -->
-    <textarea id="author" rows="2" cols="10" placeholder="Author"></textarea>
+    <label>
+        <input type="radio" name="option" id="optionA" value="A"> A (Author)
+    </label>
+    <label>
+        <input type="radio" name="option" id="optionB" value="B"> B (Authority)
+    </label>
+    <br><br>
+
+    <div id="author-input" style="display: none;">
+        <label for="author">Author: </label>
+        <textarea id="author" rows="2" cols="10" placeholder="Enter author name(s)"></textarea><br><br>
+    </div>
+
+    <div id="authority-input" style="display: none;">
+        <label for="authority">Authority: </label>
+        <textarea id="authority" rows="2" cols="10" placeholder="Enter authority name(s)"></textarea><br><br>
+    </div>
     
     <label for="title">Title: </label>
     <input type="text" id="title" placeholder="Enter title of the paper"><br><br>
