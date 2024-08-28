@@ -2,6 +2,8 @@ let selectedOption = 'A'; // Set default option to 'A'
 
 window.onload = function() {
     setOption('A'); // Automatically select "A" on page load
+
+    // Add event listeners for real-time BibTeX generation
     document.getElementById('author').addEventListener('input', generateBibTeX);
     document.getElementById('authority').addEventListener('input', generateBibTeX);
     document.getElementById('title').addEventListener('input', generateBibTeX);
