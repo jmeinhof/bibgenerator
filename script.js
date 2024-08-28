@@ -2,6 +2,10 @@ let selectedOption = 'A'; // Set default option to 'A'
 
 window.onload = function() {
     setOption('A'); // Automatically select "A" on page load
+    document.getElementById('author').addEventListener('input', generateBibTeX);
+    document.getElementById('authority').addEventListener('input', generateBibTeX);
+    document.getElementById('title').addEventListener('input', generateBibTeX);
+    document.getElementById('year').addEventListener('input', generateBibTeX);
 };
 
 function setOption(option) {
@@ -50,7 +54,9 @@ function generateBibTeX() {
 }
 
 function copyBibTeX() {
+    generateBibTeX(); // Ensure the BibTeX is up-to-date
     const bibtexOutput = document.getElementById('bibtex-output');
     bibtexOutput.select();
     document.execCommand('copy');
+    alert('BibTeX copied to clipboard!'); // Optional: notify the user that the text has been copied
 }
