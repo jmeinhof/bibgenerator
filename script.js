@@ -97,8 +97,11 @@ function generatePlain() {
         plain += `${document.getElementById('date_da_Entscheidung').value}, `;
         plain += `${document.getElementById('title_ti_Entscheidung').value}, `;
         plain += `${document.getElementById('fundstelle_a2_Entscheidung').value} `;
-        plain += `vom ${document.getElementById('volume_vl_Entscheidung').value}, `;
-        plain += `SP  - ${document.getElementById('startpage_sp_Entscheidung').value}.`;
+        plain += `vom ${document.getElementById('volume_vl_Entscheidung').value}`;
+        if (document.getElementById('startpage_sp_Entscheidung').value != '') {
+            plain += `, ${document.getElementById('startpage_sp_Entscheidung').value}`;
+        }
+        plain += '.';
     }
     
     document.getElementById('plain-output').value = plain;
