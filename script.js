@@ -11,20 +11,20 @@ window.onload = function() {
 };
 
 function setOption(option) {
-    const buttonA = document.getElementById('buttonGesetz');
+    const buttonGesetz = document.getElementById('buttonGesetz');
     const buttonB = document.getElementById('buttonB');
     const authorInput = document.getElementById('author-input');
     const authorityInput = document.getElementById('authority-input');
 
     if (option === 'Gesetz') {
         selectedOption = 'Gesetz';
-        buttonA.classList.add('active');
+        buttonGesetz.classList.add('active');
         buttonB.classList.remove('active');
         authorInput.style.display = 'block';
         authorityInput.style.display = 'none';
     } else if (option === 'B') {
         selectedOption = 'B';
-        buttonA.classList.remove('active');
+        buttonGesetz.classList.remove('active');
         buttonB.classList.add('active');
         authorInput.style.display = 'none';
         authorityInput.style.display = 'block';
