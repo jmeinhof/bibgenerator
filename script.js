@@ -3,10 +3,18 @@ let selectedOption = 'Gesetz'; // Set default option to 'Gesetz'
 window.onload = function() {
     setOption('Gesetz'); // Automatically select "A" on page load
 
-    // Add event listeners for real-time BibTeX generation
+    // Add event listeners, general
+    document.getElementById('type_ty').addEventListener('input', generateBibTeX);
+    document.getElementById('title_ti').addEventListener('input', generateBibTeX);
+    document.getElementById('title2_t2').addEventListener('input', generateBibTeX);
+    document.getElementById('date_da').addEventListener('input', generateBibTeX);
+    document.getElementById('volume_vl').addEventListener('input', generateBibTeX);
+    document.getElementById('startpage_sp').addEventListener('input', generateBibTeX);
+
+    // Gesetz
+    document.getElementById('title_short_la').addEventListener('input', generateBibTeX);  // Use language (la) as a helper var for short title
     document.getElementById('author').addEventListener('input', generateBibTeX);
     document.getElementById('authority').addEventListener('input', generateBibTeX);
-    document.getElementById('title').addEventListener('input', generateBibTeX);
     document.getElementById('year').addEventListener('input', generateBibTeX);
 };
 
