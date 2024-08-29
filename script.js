@@ -25,10 +25,13 @@ function setOption(option) {
 
 function addEventListeners() {
     const fields = [
-        'type_ty', 'title_ti', 'date_da', 'volume_vl', 
-        'startpage_sp', 'title2_t2', 'title_short_la', 
-        'title3_t3', 'aktenzeichen_m1', 'fundstelle_a2', 
-        'publisher_pb', 'aktenzeichen_sv'
+        'type_ty_Gesetz', 'title_ti_Gesetz', 'date_da_Gesetz', 'volume_vl_Gesetz', 
+        'startpage_sp_Gesetz', 'title2_t2_Gesetz', 'title_short_la_Gesetz',
+        'type_ty_Gesetzentwurf', 'title_ti_Gesetzentwurf', 'date_da_Gesetzentwurf',
+        'title3_t3_Gesetzentwurf', 'aktenzeichen_m1_Gesetzentwurf',
+        'type_ty_Entscheidung', 'title_ti_Entscheidung', 'date_da_Entscheidung',
+        'fundstelle_a2_Entscheidung', 'volume_vl_Entscheidung', 'startpage_sp_Entscheidung',
+        'publisher_pb_Entscheidung', 'aktenzeichen_sv_Entscheidung'
     ];
 
     fields.forEach(id => {
@@ -43,28 +46,28 @@ function generateRIS() {
     let ris = '';
 
     if (selectedOption === 'Gesetz') {
-        ris += `TY  - ${document.getElementById('type_ty').value}\n`;
-        ris += `TI  - ${document.getElementById('title_ti').value}\n`;
-        ris += `DA  - ${document.getElementById('date_da').value}\n`;
-        ris += `T2  - ${document.getElementById('title2_t2').value}\n`;
-        ris += `VL  - ${document.getElementById('volume_vl').value}\n`;
-        ris += `SP  - ${document.getElementById('startpage_sp').value}\n`;
-        ris += `LA  - ${document.getElementById('title_short_la').value}\n`;
+        ris += `TY  - ${document.getElementById('type_ty_Gesetz').value}\n`;
+        ris += `TI  - ${document.getElementById('title_ti_Gesetz').value}\n`;
+        ris += `DA  - ${document.getElementById('date_da_Gesetz').value}\n`;
+        ris += `T2  - ${document.getElementById('title2_t2_Gesetz').value}\n`;
+        ris += `VL  - ${document.getElementById('volume_vl_Gesetz').value}\n`;
+        ris += `SP  - ${document.getElementById('startpage_sp_Gesetz').value}\n`;
+        ris += `LA  - ${document.getElementById('title_short_la_Gesetz').value}\n`;
     } else if (selectedOption === 'Gesetzentwurf') {
-        ris += `TY  - ${document.getElementById('type_ty').value}\n`;
-        ris += `TI  - ${document.getElementById('title_ti').value}\n`;
-        ris += `DA  - ${document.getElementById('date_da').value}\n`;
-        ris += `T3  - ${document.getElementById('title3_t3').value}\n`;
-        ris += `M1  - ${document.getElementById('aktenzeichen_m1').value}\n`;
+        ris += `TY  - ${document.getElementById('type_ty_Gesetzentwurf').value}\n`;
+        ris += `TI  - ${document.getElementById('title_ti_Gesetzentwurf').value}\n`;
+        ris += `DA  - ${document.getElementById('date_da_Gesetzentwurf').value}\n`;
+        ris += `T3  - ${document.getElementById('title3_t3_Gesetzentwurf').value}\n`;
+        ris += `M1  - ${document.getElementById('aktenzeichen_m1_Gesetzentwurf').value}\n`;
     } else if (selectedOption === 'Entscheidung') {
-        ris += `TY  - ${document.getElementById('type_ty').value}\n`;
-        ris += `TI  - ${document.getElementById('title_ti').value}\n`;
-        ris += `DA  - ${document.getElementById('date_da').value}\n`;
-        ris += `A2  - ${document.getElementById('fundstelle_a2').value}\n`;
-        ris += `VL  - ${document.getElementById('volume_vl').value}\n`;
-        ris += `SP  - ${document.getElementById('startpage_sp').value}\n`;
-        ris += `PB  - ${document.getElementById('publisher_pb').value}\n`;
-        ris += `SV  - ${document.getElementById('aktenzeichen_sv').value}\n`;
+        ris += `TY  - ${document.getElementById('type_ty_Entscheidung').value}\n`;
+        ris += `TI  - ${document.getElementById('title_ti_Entscheidung').value}\n`;
+        ris += `DA  - ${document.getElementById('date_da_Entscheidung').value}\n`;
+        ris += `A2  - ${document.getElementById('fundstelle_a2_Entscheidung').value}\n`;
+        ris += `VL  - ${document.getElementById('volume_vl_Entscheidung').value}\n`;
+        ris += `SP  - ${document.getElementById('startpage_sp_Entscheidung').value}\n`;
+        ris += `PB  - ${document.getElementById('publisher_pb_Entscheidung').value}\n`;
+        ris += `SV  - ${document.getElementById('aktenzeichen_sv_Entscheidung').value}\n`;
     }
 
     ris += `ER  - \n`; // End of RIS reference
