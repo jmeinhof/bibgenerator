@@ -113,7 +113,7 @@ function generatePlain() {
     }
     
     document.getElementById('plain-output').textContent = plain; 
-    document.getElementById('pcite-output').value = pcite; 
+    document.getElementById('pcite-output').textContent = pcite; 
 }
 
 function copyRIS() {
