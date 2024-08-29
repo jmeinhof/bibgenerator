@@ -107,6 +107,7 @@ function generatePlain() {
     document.getElementById('plain-output').value = plain;
 }
 
+
 function copyRIS() {
     generateRIS(); // Ensure the RIS is up-to-date
     const risOutput = document.getElementById('ris-output');
