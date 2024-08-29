@@ -6,13 +6,26 @@ window.onload = function() {
     // Add event listeners, general
     document.getElementById('type_ty').addEventListener('input', generateBibTeX);
     document.getElementById('title_ti').addEventListener('input', generateBibTeX);
-    document.getElementById('title2_t2').addEventListener('input', generateBibTeX);
     document.getElementById('date_da').addEventListener('input', generateBibTeX);
+
+    // Gesetz + Entscheidung
     document.getElementById('volume_vl').addEventListener('input', generateBibTeX);
     document.getElementById('startpage_sp').addEventListener('input', generateBibTeX);
-
+    
     // Gesetz
+    document.getElementById('title2_t2').addEventListener('input', generateBibTeX);
+    
     document.getElementById('title_short_la').addEventListener('input', generateBibTeX);  // Use language (la) as a helper var for short title
+
+    // Gesetzentwurf
+    document.getElementById('title3_t3').addEventListener('input', generateBibTeX);
+    document.getElementById('aktenzeichen_m1').addEventListener('input', generateBibTeX);
+
+    // Entscheidung
+    document.getElementById('fundstelle_a2').addEventListener('input', generateBibTeX);
+    document.getElementById('publisher_pb').addEventListener('input', generateBibTeX);
+    document.getElementById('aktenzeichen_sv').addEventListener('input', generateBibTeX);
+    
     document.getElementById('author').addEventListener('input', generateBibTeX);
     document.getElementById('authority').addEventListener('input', generateBibTeX);
     document.getElementById('year').addEventListener('input', generateBibTeX);
@@ -20,20 +33,31 @@ window.onload = function() {
 
 function setOption(option) {
     const buttonGesetz = document.getElementById('buttonGesetz');
-    const buttonB = document.getElementById('buttonB');
+    const buttonGesetzentwurf = document.getElementById('buttonGesetzentwurf');
+    const buttonEntscheidung = document.getElementById('buttonEntscheidung');
     const authorInput = document.getElementById('author-input');
     const authorityInput = document.getElementById('authority-input');
-
+    
     if (option === 'Gesetz') {
         selectedOption = 'Gesetz';
         buttonGesetz.classList.add('active');
-        buttonB.classList.remove('active');
+        buttonGesetzentwurf.classList.remove('active');
+        buttonEntscheidung.classList.remove('active');
+        
         authorInput.style.display = 'block';
         authorityInput.style.display = 'none';
-    } else if (option === 'B') {
-        selectedOption = 'B';
+    } else if (option === 'Gesetzentwurf') {
+        selectedOption = 'Gesetzentwurf';
         buttonGesetz.classList.remove('active');
-        buttonB.classList.add('active');
+        buttonGesetzentwurf.classList.add('active');
+        buttonEntscheidung.classList.remove('active');
+        authorInput.style.display = 'none';
+        authorityInput.style.display = 'block';
+    } else if (option === 'Entscheidung') {
+        selectedOption = 'Entscheidung';
+        buttonGesetz.classList.remove('active');
+        buttonGesetzentwurf.classList.add('active');
+        buttonEntscheidung.classList.remove('active');
         authorInput.style.display = 'none';
         authorityInput.style.display = 'block';
     }
@@ -46,6 +70,7 @@ function generateBibTeX() {
     
     if (selectedOption === 'Gesetz') {
         authorOrAuthority = document.getElementById('author').value;
+        
     } else if (selectedOption === 'B') {
         authorOrAuthority = document.getElementById('authority').value;
     }
