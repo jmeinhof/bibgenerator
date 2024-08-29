@@ -21,6 +21,7 @@ function setOption(option) {
     document.getElementById('buttonEntscheidung').classList.toggle('active', option === 'Entscheidung');
 
     generateRIS(); // Update RIS output whenever the option is changed
+    generatePlain(); 
 }
 
 function addEventListeners() {
@@ -38,6 +39,7 @@ function addEventListeners() {
         const element = document.getElementById(id);
         if (element) {
             element.addEventListener('input', generateRIS);
+            element.addEventListener('input', generatePlain);
         }
     });
 }
@@ -85,6 +87,9 @@ function generatePlain() {
         plain += `vom ${document.getElementById('volume_vl_Gesetz').value}, `;
         plain += `${document.getElementById('startpage_sp_Gesetz').value}.`;
     }
+    
+    document.getElementById('plain-output').value = plain;
+}
 
 function copyRIS() {
     generateRIS(); // Ensure the RIS is up-to-date
