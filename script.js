@@ -4,9 +4,15 @@ window.onload = function() {
     setOption('A'); // Automatically select "A" on page load
 
     // Add event listeners for real-time BibTeX generation
+    document.getElementById('type_ty').addEventListener('input', generateBibTeX);
+    document.getElementById('title_ti').addEventListener('input', generateBibTeX);
+    document.getElementById('code_t2').addEventListener('input', generateBibTeX);
+    document.getElementById('date_da').addEventListener('input', generateBibTeX);
+    document.getElementById('pages_sp').addEventListener('input', generateBibTeX);
+    document.getElementById('short_title_la').addEventListener('input', generateBibTeX); //Note: language is used as a helper var for the short title
     document.getElementById('author').addEventListener('input', generateBibTeX);
     document.getElementById('authority').addEventListener('input', generateBibTeX);
-    document.getElementById('title').addEventListener('input', generateBibTeX);
+    document.getElementById('title_ti').addEventListener('input', generateBibTeX);
     document.getElementById('year').addEventListener('input', generateBibTeX);
 };
 
