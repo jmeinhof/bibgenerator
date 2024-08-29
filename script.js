@@ -86,6 +86,19 @@ function generatePlain() {
         plain += `${document.getElementById('title2_t2_Gesetz').value} `;
         plain += `vom ${document.getElementById('volume_vl_Gesetz').value}, `;
         plain += `${document.getElementById('startpage_sp_Gesetz').value}.`;
+    } else if (selectedOption === 'Gesetzentwurf') {
+        plain += `${document.getElementById('title3_t3_Gesetzentwurf').value}, `;
+        plain += `${document.getElementById('title_ti_Gesetzentwurf').value}, `;
+        plain += `${document.getElementById('aktenzeichen_m1_Gesetzentwurf').value} `;
+        plain += `vom ${document.getElementById('date_da_Gesetzentwurf').value}.`; 
+    } else if (selectedOption === 'Entscheidung') {
+        plain += `${document.getElementById('publisher_pb_Entscheidung').value}, `;
+        plain += `${document.getElementById('aktenzeichen_sv_Entscheidung').value}, `;
+        plain += `${document.getElementById('date_da_Entscheidung').value}, `;
+        plain += `${document.getElementById('title_ti_Entscheidung').value}, `;
+        plain += `${document.getElementById('fundstelle_a2_Entscheidung').value} `;
+        plain += `vom ${document.getElementById('volume_vl_Entscheidung').value}, `;
+        plain += `SP  - ${document.getElementById('startpage_sp_Entscheidung').value}.`;
     }
     
     document.getElementById('plain-output').value = plain;
