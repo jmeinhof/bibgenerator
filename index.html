@@ -20,15 +20,67 @@
         .input-field {
             display: none;
         }
+            /* Tooltip container */
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 140px;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%; /* Position the tooltip above the button */
+        left: 50%;
+        margin-left: -70px; /* Center the tooltip */
+        opacity: 0;
+        transition: opacity 0.1s ease-in-out; /* Make it appear instantly */
+    }
+
+    /* Tooltip arrow */
+    .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%; /* Arrow at the bottom of the tooltip */
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+
+    /* Show the tooltip text when you hover over the tooltip container */
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }
     </style>
 </head>
 <body>
-    <h1>RIS Generator from Text5</h1>
+    <h1>RIS Generator from Text6</h1>
     <p>Choose an option below:</p>
     
-    <button id="buttonGesetz" class="option-button" title="Nationale/Internationale Gesetze, Verordnungen und Richtlinien" onclick="setOption('Gesetz')">Gesetz</button>
+    <div class="tooltip">
+    <button id="buttonGesetz" class="option-button" onclick="setOption('Gesetz')">Gesetz</button>
+    <span class="tooltiptext">Instant tooltip for Gesetz</span>
+    </div>
+
+    <div class="tooltip">
     <button id="buttonGesetzentwurf" class="option-button" onclick="setOption('Gesetzentwurf')">Gesetzentwurf</button>
+    <span class="tooltiptext">Instant tooltip for Gesetzentwurf</span>
+    </div>
+
+    <div class="tooltip">
     <button id="buttonEntscheidung" class="option-button" onclick="setOption('Entscheidung')">Entscheidung</button>
+    <span class="tooltiptext">Instant tooltip for Entscheidung</span>
+    </div>
     <br><br>
 
     <!-- Gesetz Input Fields -->
