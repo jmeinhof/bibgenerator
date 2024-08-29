@@ -75,6 +75,17 @@ function generateRIS() {
     document.getElementById('ris-output').value = ris;
 }
 
+function generatePlain() {
+    let plain = '';
+
+    if (selectedOption === 'Gesetz') {
+        plain += `${document.getElementById('title_ti_Gesetz').value} `;
+        plain += `vom ${document.getElementById('date_da_Gesetz').value}, `;
+        plain += `${document.getElementById('title2_t2_Gesetz').value} `;
+        plain += `vom ${document.getElementById('volume_vl_Gesetz').value}, `;
+        plain += `${document.getElementById('startpage_sp_Gesetz').value}.`;
+    }
+
 function copyRIS() {
     generateRIS(); // Ensure the RIS is up-to-date
     const risOutput = document.getElementById('ris-output');
