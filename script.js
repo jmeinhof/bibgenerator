@@ -112,8 +112,8 @@ function generatePlain() {
         plain += '.';
     }
     
-    document.getElementById('plain-output').textContent = plain; // Corrected
-    document.getElementById('pcite_output').value = pcite; // Corrected
+    document.getElementById('plain-output').textContent = plain; 
+    document.getElementById('pcite-output').value = pcite; 
 }
 
 function copyRIS() {
