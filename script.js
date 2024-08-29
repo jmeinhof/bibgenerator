@@ -1,70 +1,60 @@
-let selectedOption = 'Gesetz'; // Set default option to 'Gesetz'
+let selectedOption = 'option1'; // Set default option to 'option1'
 
 window.onload = function() {
-    setOption('Gesetz'); // Automatically select "Gesetz" on page load
+    setOption('option1'); // Automatically select "option1" on page load
 
-    // Add event listeners "Gesetz"
-    document.getElementById('type_ty').addEventListener('input', generateBibTeX);
-    document.getElementById('title_ti').addEventListener('input', generateBibTeX);
-    document.getElementById('code_t2').addEventListener('input', generateBibTeX);
-    document.getElementById('date_da').addEventListener('input', generateBibTeX);
-    document.getElementById('pages_sp').addEventListener('input', generateBibTeX);
-    document.getElementById('short_title_la').addEventListener('input', generateBibTeX); //Note: language is used as a helper var for the short title
-    document.getElementById('author').addEventListener('input', generateBibTeX);
-    document.getElementById('authority').addEventListener('input', generateBibTeX);
-    document.getElementById('title_ti').addEventListener('input', generateBibTeX);
-    document.getElementById('year').addEventListener('input', generateBibTeX);
+    // Add event listeners for real-time RIS generation
+    for (let i = 1; i <= 11; i++) {
+        document.getElementById(`inputField${i}`).addEventListener('input', generateRIS);
+    }
 };
 
 function setOption(option) {
-    const buttonGesetz = document.getElementById('buttonGesetz');
-    const buttonB = document.getElementById('buttonB');
-    const authorInput = document.getElementById('author-input');
-    const authorityInput = document.getElementById('authority-input');
+    selectedOption = option;
 
-    if (option === 'Gesetz') {
-        selectedOption = 'Gesetz';
-        buttonA.classList.add('active');
-        buttonB.classList.remove('active');
-        authorInput.style.display = 'block';
-        authorityInput.style.display = 'none';
-    } else if (option === 'B') {
-        selectedOption = 'B';
-        buttonGesetz.classList.remove('active');
-        buttonB.classList.add('active');
-        authorInput.style.display = 'none';
-        authorityInput.style.display = 'block';
+    // Update active button
+    const buttons = document.querySelectorAll('.option-button');
+    buttons.forEach(button => button.classList.remove('active'));
+    document.getElementById(`button${option.match(/\d+/)[0]}`).classList.add('active');
+
+    // Show corresponding input fields based on the selected option
+    for (let i = 1; i <= 11; i++) {
+        document.getElementById(`input${i}`).style.display = 'none';
     }
 
-    generateBibTeX(); // Update BibTeX output whenever the option is changed
-}
-
-function generateBibTeX() {
-    let authorOrAuthority = '';
-    
-    if (selectedOption === 'Gesetz') {
-        authorOrAuthority = document.getElementById('author').value;
-    } else if (selectedOption === 'B') {
-        authorOrAuthority = document.getElementById('authority').value;
+    if (option === 'option1') {
+        // Show relevant fields for option 1
+        document.getElementById('input1').style.display = 'block';
+        document.getElementById('input2').style.display = 'block';
+    } else if (option === 'option2') {
+        // Show relevant fields for option 2
+        document.getElementById('input3').style.display = 'block';
+        document.getElementById('input4').style.display = 'block';
     }
-    
-    const title = document.getElementById('title').value;
-    const year = document.getElementById('year').value;
-
-    // Create a simple BibTeX entry
-    let bibtex = `@article{,\n`;
-    bibtex += `  author = {${authorOrAuthority}},\n`;
-    bibtex += `  title = {${title}},\n`;
-    bibtex += `  year = {${year}}\n`;
-    bibtex += `}`;
-
-    document.getElementById('bibtex-output').value = bibtex;
+    // Add more conditions for other options...
+    // Optionally, include different fields based on selected option
+    generateRIS(); // Update RIS output whenever the option is changed
 }
 
-function copyBibTeX() {
-    generateBibTeX(); // Ensure the BibTeX is up-to-date
-    const bibtexOutput = document.getElementById('bibtex-output');
-    bibtexOutput.select();
+function generateRIS() {
+    let ris = `TY  - ${selectedOption}\n`;
+
+    for (let i = 1; i <= 11; i++) {
+        const inputValue = document.getElementById(`inputField${i}`).value;
+        if (inputValue) {
+            ris += `Field${i} - ${inputValue}\n`;
+        }
+    }
+
+    ris += `ER  - \n`; // End of RIS entry
+
+    document.getElementById('ris-output').value = ris;
+}
+
+function copyRIS() {
+    generateRIS(); // Ensure the RIS is up-to-date
+    const risOutput = document.getElementById('ris-output');
+    risOutput.select();
     document.execCommand('copy');
 
     // Show the notification
@@ -76,4 +66,3 @@ function copyBibTeX() {
         notification.style.display = 'none';
     }, 2000);
 }
-
