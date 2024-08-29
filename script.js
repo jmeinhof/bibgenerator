@@ -1,32 +1,24 @@
 let selectedOption = 'Gesetz'; // Set default option to 'Gesetz'
-let inputValues = {
-    'Gesetz': {},
-    'Gesetzentwurf': {},
-    'Entscheidung': {}
-}; // Object to store input values for each option
 
 window.onload = function() {
     setOption('Gesetz'); // Automatically select "Gesetz" on page load
 
     // Add event listeners for all inputs
-    document.getElementById('type_ty').addEventListener('input', updateInputValues);
-    document.getElementById('title_ti').addEventListener('input', updateInputValues);
-    document.getElementById('date_da').addEventListener('input', updateInputValues);
-    document.getElementById('volume_vl').addEventListener('input', updateInputValues);
-    document.getElementById('startpage_sp').addEventListener('input', updateInputValues);
-    document.getElementById('title2_t2').addEventListener('input', updateInputValues);
-    document.getElementById('title_short_la').addEventListener('input', updateInputValues);
-    document.getElementById('title3_t3').addEventListener('input', updateInputValues);
-    document.getElementById('aktenzeichen_m1').addEventListener('input', updateInputValues);
-    document.getElementById('fundstelle_a2').addEventListener('input', updateInputValues);
-    document.getElementById('publisher_pb').addEventListener('input', updateInputValues);
-    document.getElementById('aktenzeichen_sv').addEventListener('input', updateInputValues);
+    document.getElementById('type_ty').addEventListener('input', generateRIS);
+    document.getElementById('title_ti').addEventListener('input', generateRIS);
+    document.getElementById('date_da').addEventListener('input', generateRIS);
+    document.getElementById('volume_vl').addEventListener('input', generateRIS);
+    document.getElementById('startpage_sp').addEventListener('input', generateRIS);
+    document.getElementById('title2_t2').addEventListener('input', generateRIS);
+    document.getElementById('title_short_la').addEventListener('input', generateRIS);
+    document.getElementById('title3_t3').addEventListener('input', generateRIS);
+    document.getElementById('aktenzeichen_m1').addEventListener('input', generateRIS);
+    document.getElementById('fundstelle_a2').addEventListener('input', generateRIS);
+    document.getElementById('publisher_pb').addEventListener('input', generateRIS);
+    document.getElementById('aktenzeichen_sv').addEventListener('input', generateRIS);
 };
 
 function setOption(option) {
-    // Save current input values before switching
-    saveCurrentInputValues();
-
     selectedOption = option;
     
     // Display or hide input fields based on the selected option
@@ -39,41 +31,7 @@ function setOption(option) {
     document.getElementById('buttonGesetzentwurf').classList.toggle('active', option === 'Gesetzentwurf');
     document.getElementById('buttonEntscheidung').classList.toggle('active', option === 'Entscheidung');
 
-    // Restore the input values after switching
-    restoreInputValues();
-
     generateRIS(); // Update RIS output whenever the option is changed
-}
-
-function updateInputValues() {
-    const fields = [
-        'type_ty', 'title_ti', 'date_da', 'volume_vl', 
-        'startpage_sp', 'title2_t2', 'title_short_la', 
-        'title3_t3', 'aktenzeichen_m1', 'fundstelle_a2', 
-        'publisher_pb', 'aktenzeichen_sv'
-    ];
-
-    fields.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            inputValues[selectedOption][id] = element.value;
-        }
-    });
-
-    generateRIS(); // Update RIS output on input change
-}
-
-function saveCurrentInputValues() {
-    updateInputValues(); // Save the values currently in the input fields
-}
-
-function restoreInputValues() {
-    for (const id in inputValues[selectedOption]) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.value = inputValues[selectedOption][id] || ''; // Restore saved value or use empty string if not saved
-        }
-    }
 }
 
 function generateRIS() {
