@@ -79,6 +79,7 @@ function generateRIS() {
 
 function generatePlain() {
     let plain = '';
+    let pcite = '';
 
     if (selectedOption === 'Gesetz') {
         plain += `${document.getElementById('title_ti_Gesetz').value} `;
@@ -86,6 +87,13 @@ function generatePlain() {
         plain += `${document.getElementById('title2_t2_Gesetz').value} `;
         plain += `vom ${document.getElementById('volume_vl_Gesetz').value}, `;
         plain += `${document.getElementById('startpage_sp_Gesetz').value}.`;
+
+        let fullDate = document.getElementById('date_da_Gesetz').value;
+        let yearFromDate = fullDate.slice(-4); // Extracts the last 4 characters, which is the year in "29 August 2024"
+
+        pcite += `(${document.getElementById('title_short_la_Gesetz').value}, `;
+        pcite += yearFromDate;
+        pcite += ')'     
     } else if (selectedOption === 'Gesetzentwurf') {
         plain += `${document.getElementById('title3_t3_Gesetzentwurf').value}, `;
         plain += `${document.getElementById('title_ti_Gesetzentwurf').value}, `;
@@ -105,6 +113,7 @@ function generatePlain() {
     }
     
     document.getElementById('plain-output').value = plain;
+    document.getElementById('pcite-output').value = pcite;
 }
 
 
