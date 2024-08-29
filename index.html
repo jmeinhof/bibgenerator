@@ -79,10 +79,42 @@
         flex-grow: 1; /* Allows input to take up the remaining space */
         padding: 5px; /* Optional: Add some padding inside the input */
     }
+
+    /* Button Styling */
+        .copy-ris-button {
+            padding: 15px 30px; /* Increase padding for a larger button */
+            font-size: 18px; /* Larger font size for better readability */
+            color: white; /* Text color */
+            background-color: #007BFF; /* Blue background */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+        }
+
+        .copy-ris-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+        }
+
+        .copy-ris-button:active {
+            background-color: #004085; /* Even darker blue on click */
+            box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on active */
+            transform: translateY(1px); /* Slight "press" effect */
+        }
+
+        /* Notification styling (if desired) */
+        #copy-notification {
+            color: green;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>RIS Generator (Zotero)</h1>
+    <h1>RIS Generator (Zotero)r</h1>
     
     <div class="tooltip">
     <button id="buttonGesetz" class="option-button" onclick="setOption('Gesetz')">Gesetz</button>
@@ -182,9 +214,10 @@
 
 
     <h2>RIS Code (Zotero)</h2>
-    <button type="button" onclick="copyRIS()">Copy RIS code </button><br><br>
+    <button type="button" class="copy-ris-button" onclick="copyRIS()">Copy RIS Code</button>
+    <br><br>
     <textarea id="ris-output" rows="10" cols="50" readonly></textarea>
-    <div id="copy-notification" style="display: none; color: green; margin-top: 10px;">RIS code copied to clipboard!</div>
+    <div id="copy-notification" style="display: none;">RIS code copied to clipboard!</div>
     <p>Nach dem Kopieren des Codes: Öffne die relevante Bibliothek in Zotero -> Drücke <b>Strg + Shift + Alt + I</b> <i>(Datei -> Importieren aus Zwischenablage)</i></p>
 
     <hr>
