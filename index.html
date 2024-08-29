@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RIS Generator</title>
+    <title>BibTeX Generator</title>
     <style>
         .option-button {
             padding: 10px 20px;
@@ -17,51 +17,37 @@
             color: white;
             border: 1px solid #7E090C;
         }
-        .input-group {
-            margin-bottom: 10px;
-        }
     </style>
 </head>
 <body>
-    <h1>RIS Generator from Text</h1>
+    <h1>BibTeX Generator from Text</h1>
     <p>Choose an option below:</p>
     
-    <!-- 10 Buttons -->
-    <div id="button-container">
-        <button id="button1" class="option-button" onclick="setOption('option1')">Option 1</button>
-        <button id="button2" class="option-button" onclick="setOption('option2')">Option 2</button>
-        <button id="button3" class="option-button" onclick="setOption('option3')">Option 3</button>
-        <button id="button4" class="option-button" onclick="setOption('option4')">Option 4</button>
-        <button id="button5" class="option-button" onclick="setOption('option5')">Option 5</button>
-        <button id="button6" class="option-button" onclick="setOption('option6')">Option 6</button>
-        <button id="button7" class="option-button" onclick="setOption('option7')">Option 7</button>
-        <button id="button8" class="option-button" onclick="setOption('option8')">Option 8</button>
-        <button id="button9" class="option-button" onclick="setOption('option9')">Option 9</button>
-        <button id="button10" class="option-button" onclick="setOption('option10')">Option 10</button>
-    </div>
+    <button id="buttonA" class="option-button" onclick="setOption('A')">A (Author)</button>
+    <button id="buttonB" class="option-button" onclick="setOption('B')">B (Authority)</button>
     <br><br>
 
-    <!-- 11 Input Fields -->
-    <div id="input-container">
-        <div id="input1" class="input-group" style="display: none;">
-            <label for="input1">Field 1: </label>
-            <input type="text" id="inputField1" placeholder="Enter Field 1"><br><br>
-        </div>
-        <div id="input2" class="input-group" style="display: none;">
-            <label for="input2">Field 2: </label>
-            <input type="text" id="inputField2" placeholder="Enter Field 2"><br><br>
-        </div>
-        <!-- Repeat for all 11 input fields, changing id and label text accordingly -->
-        <div id="input11" class="input-group" style="display: none;">
-            <label for="input11">Field 11: </label>
-            <input type="text" id="inputField11" placeholder="Enter Field 11"><br><br>
-        </div>
+    <div id="author-input" style="display: none;">
+        <label for="author">Author: </label>
+        <input type="text" id="author" placeholder="Enter author name(s)"><br><br>
     </div>
 
-    <h2>Generated RIS Code</h2>
-    <div id="copy-notification" style="display: none; color: green; margin-top: 10px;">RIS code copied to clipboard!</div>
-    <button type="button" onclick="copyRIS()">Copy RIS</button><br><br>
-    <textarea id="ris-output" rows="10" cols="50" readonly></textarea>
+    <div id="authority-input" style="display: none;">
+        <label for="authority">Authority: </label>
+        <input type="text" id="authority" placeholder="Enter authority name(s)"><br><br>
+    </div>
+    
+    <label for="title">Title: </label>
+    <input type="text" id="title" placeholder="Enter title of the paper"><br><br>
+    
+    <label for="year">Year: </label>
+    <input type="text" id="year" placeholder="Enter publication year"><br><br>
+
+    <h2>Generated BibTeX</h2>
+    <div id="copy-notification" style="display: none; color: green; margin-top: 10px;">BibTeX copied to clipboard!</div>
+    <button type="button" onclick="copyBibTeX()">Copy BibTeX</button><br><br>
+    <textarea id="bibtex-output" rows="10" cols="50" readonly></textarea>
+
 
     <script src="script.js"></script>
 </body>
