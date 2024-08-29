@@ -1,7 +1,7 @@
-let selectedOption = 'A'; // Set default option to 'A'
+let selectedOption = 'Gesetz'; // Set default option to 'Gesetz'
 
 window.onload = function() {
-    setOption('A'); // Automatically select "A" on page load
+    setOption('Gesetz'); // Automatically select "A" on page load
 
     // Add event listeners for real-time BibTeX generation
     document.getElementById('author').addEventListener('input', generateBibTeX);
@@ -11,13 +11,13 @@ window.onload = function() {
 };
 
 function setOption(option) {
-    const buttonA = document.getElementById('buttonA');
+    const buttonA = document.getElementById('buttonGesetz');
     const buttonB = document.getElementById('buttonB');
     const authorInput = document.getElementById('author-input');
     const authorityInput = document.getElementById('authority-input');
 
-    if (option === 'A') {
-        selectedOption = 'A';
+    if (option === 'Gesetz') {
+        selectedOption = 'Gesetz';
         buttonA.classList.add('active');
         buttonB.classList.remove('active');
         authorInput.style.display = 'block';
@@ -36,7 +36,7 @@ function setOption(option) {
 function generateBibTeX() {
     let authorOrAuthority = '';
     
-    if (selectedOption === 'A') {
+    if (selectedOption === 'Gesetz') {
         authorOrAuthority = document.getElementById('author').value;
     } else if (selectedOption === 'B') {
         authorOrAuthority = document.getElementById('authority').value;
