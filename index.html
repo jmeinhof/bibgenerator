@@ -61,10 +61,28 @@
         visibility: visible;
         opacity: 1;
     }
+
+    /* Input boxes */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Space between form groups */
+    }
+
+    .form-group label {
+        width: 200px; /* Set a fixed width for labels */
+        margin-right: 10px; /* Space between label and input */
+        text-align: right; /* Align text to the right */
+    }
+
+    .form-group input {
+        flex-grow: 1; /* Allows input to take up the remaining space */
+        padding: 5px; /* Optional: Add some padding inside the input */
+    }
     </style>
 </head>
 <body>
-    <h1>RIS Generator (Zotero)</h1>
+    <h1>RIS Generator (Zotero)q</h1>
     
     <div class="tooltip">
     <button id="buttonGesetz" class="option-button" onclick="setOption('Gesetz')">Gesetz</button>
@@ -86,8 +104,11 @@
     <div id="input-fields-Gesetz" class="input-field">
         <!-- <label for="type_ty_Gesetz">Leave empty: </label> -->
         <!-- <input type="text" style="width: 500px;" id="type_ty_Gesetz" placeholder="leave empty"><br><br> -->
-        <label for="title_short_la_Gesetz">Kurztitel: </label>
-        <input type="text" style="width: 400px;" id="title_short_la_Gesetz" placeholder="Verordnung (EU) 2020/1429"> <i>(falls vorhanden)</i><br><br>
+        
+        <div class="form-group">
+            <label for="title_short_la_Gesetz">Kurztitel: </label>
+            <input type="text" id="title_short_la_Gesetz" placeholder="Verordnung (EU) 2020/1429">
+        </div>
         <label for="title_ti_Gesetz">Name des Gesetzes: </label>
         <input type="text" style="width: 500px;" id="title_ti_Gesetz" placeholder="Verordnung (EU) 2020/1429 des Europäischen Parlaments zur Festlegung von Maßnahmen für einen nachhaltigen Eisenbahnmarkt"><br><br>
         <label for="title2_t2_Gesetz">Angabe zur Fundstelle: </label>
