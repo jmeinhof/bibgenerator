@@ -23,7 +23,7 @@
     </style>
 </head>
 <body>
-    <h1>RIS Generator from Text3</h1>
+    <h1>RIS Generator from Text4</h1>
     <p>Choose an option below:</p>
     
     <button id="buttonGesetz" class="option-button" onclick="setOption('Gesetz')">Gesetz</button>
@@ -33,12 +33,12 @@
 
     <!-- Gesetz Input Fields -->
     <div id="input-fields-Gesetz" class="input-field">
-        <label for="type_ty_Gesetz">Name des Gesetzes: </label>
-        <input type="text" style="width: 300px;" id="type_ty_Gesetz" placeholder="Verordnung (EU) 2020/1429 des Europäischen Parlaments zur Festlegung von Maßnahmen für einen"><br><br>
-        <label for="title_short_la_Gesetz">Short Title (LA): </label>
-        <input type="text" id="title_short_la_Gesetz" placeholder="Enter short title"><br><br>
-        <label for="title_ti_Gesetz">Title (TI): </label>
-        <input type="text" id="title_ti_Gesetz" placeholder="Enter title"><br><br>
+        <label for="type_ty_Gesetz">Leave empty: </label>
+        <input type="text" style="width: 500px;" id="type_ty_Gesetz" placeholder="leave empty"><br><br>
+        <label for="title_short_la_Gesetz">Kurztitel: </label>
+        <input type="text" style="width: 500px;" id="title_short_la_Gesetz" placeholder="Verordnung (EU) 2020/1429"> (falls vorhanden)<br><br>
+        <label for="title_ti_Gesetz">Name des Gesetzes: </label>
+        <input type="text" id="title_ti_Gesetz" placeholder="Verordnung (EU) 2020/1429 des Europäischen Parlaments zur Festlegung von Maßnahmen für einen nachhaltigen Eisenbahnmarkt"><br><br>
         <label for="title2_t2_Gesetz">Title2 (T2): </label>
         <input type="text" id="title2_t2_Gesetz" placeholder="Enter title2"><br><br>
         <label for="date_da_Gesetz">Date (DA): </label>
@@ -85,9 +85,9 @@
 
 
     <h2>Generated RIS Code</h2>
-    <div id="copy-notification" style="display: none; color: green; margin-top: 10px;">RIS code copied to clipboard!</div>
     <button type="button" onclick="copyRIS()">Copy RIS</button><br><br>
     <textarea id="ris-output" rows="10" cols="50" readonly></textarea>
+    <div id="copy-notification" style="display: none; color: green; margin-top: 10px;">RIS code copied to clipboard!</div>
 
     <script src="script.js"></script>
 </body>
