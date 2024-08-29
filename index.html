@@ -113,24 +113,37 @@
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 260px;
-            background-color: #444;
-            color: #fff;
+            width: 250px;
+            background-color: #333;
+            color: #eee;
             text-align: center;
-            border-radius: 4px;
-            padding: 10px;
+            border-radius: 5px;
+            padding: 5px 0;
             position: absolute;
             z-index: 1;
-            bottom: 125%;
+            bottom: 125%; /* Position the tooltip above the button */
             left: 50%;
-            margin-left: -60px;
+            margin-left: -70px; /* Center the tooltip */
             opacity: 0;
-            transition: opacity 0.1s ease-in-out;
+            transition: opacity 0.1s ease-in-out; /* Make it appear instantly */
         }
 
+        /* Tooltip arrow */
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* Arrow at the bottom of the tooltip */
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+
+        /* Show the tooltip text when you hover over the tooltip container */
         .tooltip:hover .tooltiptext {
             visibility: visible;
-            opacity: 0.99;
+            opacity: 1;
         }
 
         /* Notification styling */
@@ -155,7 +168,7 @@
     
     <div class="tooltip">
         <button id="buttonGesetz" class="option-button" onclick="setOption('Gesetz')">Gesetz</button>
-        <span class="tooltiptext">Nationale und internationale Gesetze, Verordnungen und Richtlinien</span>
+        <span class="tooltiptext">(Inter-)Nationale Gesetze, Verordnungen, Richtlinien</span>
     </div>
 
     <div class="tooltip">
