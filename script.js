@@ -25,11 +25,11 @@ function setOption(option) {
 
 function addEventListeners() {
     const fields = [
-        'type_ty_Gesetz', 'title_ti_Gesetz', 'date_da_Gesetz', 'volume_vl_Gesetz', 
+        'title_ti_Gesetz', 'date_da_Gesetz', 'volume_vl_Gesetz', 
         'startpage_sp_Gesetz', 'title2_t2_Gesetz', 'title_short_la_Gesetz',
-        'type_ty_Gesetzentwurf', 'title_ti_Gesetzentwurf', 'date_da_Gesetzentwurf',
+        'title_ti_Gesetzentwurf', 'date_da_Gesetzentwurf',
         'title3_t3_Gesetzentwurf', 'aktenzeichen_m1_Gesetzentwurf',
-        'type_ty_Entscheidung', 'title_ti_Entscheidung', 'date_da_Entscheidung',
+        'title_ti_Entscheidung', 'date_da_Entscheidung',
         'fundstelle_a2_Entscheidung', 'volume_vl_Entscheidung', 'startpage_sp_Entscheidung',
         'publisher_pb_Entscheidung', 'aktenzeichen_sv_Entscheidung'
     ];
