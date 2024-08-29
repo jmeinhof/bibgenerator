@@ -93,12 +93,12 @@ function generatePlain() {
 
         pcite += `(${document.getElementById('title_short_la_Gesetz').value}, `;
         pcite += yearFromDate;
-        pcite += ')'     
+        pcite += ')';
     } else if (selectedOption === 'Gesetzentwurf') {
         plain += `${document.getElementById('title3_t3_Gesetzentwurf').value}, `;
         plain += `${document.getElementById('title_ti_Gesetzentwurf').value}, `;
         plain += `${document.getElementById('aktenzeichen_m1_Gesetzentwurf').value} `;
-        plain += `vom ${document.getElementById('date_da_Gesetzentwurf').value}.`; 
+        plain += `vom ${document.getElementById('date_da_Gesetzentwurf').value}.`;
     } else if (selectedOption === 'Entscheidung') {
         plain += `${document.getElementById('publisher_pb_Entscheidung').value}, `;
         plain += `${document.getElementById('aktenzeichen_sv_Entscheidung').value}, `;
@@ -112,10 +112,9 @@ function generatePlain() {
         plain += '.';
     }
     
-    document.getElementById('plain-output').value = plain;
-    document.getElementById('pcite-output').value = pcite;
+    document.getElementById('plain-output').textContent = plain; // Corrected
+    document.getElementById('pcite_output').value = pcite; // Corrected
 }
-
 
 function copyRIS() {
     generateRIS(); // Ensure the RIS is up-to-date
