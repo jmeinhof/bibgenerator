@@ -54,13 +54,13 @@ function generateRIS() {
         ris += `SP  - ${document.getElementById('startpage_sp_Gesetz').value}\n`;
         ris += `LA  - ${document.getElementById('title_short_la_Gesetz').value}\n`;
     } else if (selectedOption === 'Gesetzentwurf') {
-        ris += `TY  - ${document.getElementById('type_ty_Gesetzentwurf').value}\n`;
+        ris += `TY  - BILL\n`;
         ris += `TI  - ${document.getElementById('title_ti_Gesetzentwurf').value}\n`;
         ris += `DA  - ${document.getElementById('date_da_Gesetzentwurf').value}\n`;
         ris += `T3  - ${document.getElementById('title3_t3_Gesetzentwurf').value}\n`;
         ris += `M1  - ${document.getElementById('aktenzeichen_m1_Gesetzentwurf').value}\n`;
     } else if (selectedOption === 'Entscheidung') {
-        ris += `TY  - ${document.getElementById('type_ty_Entscheidung').value}\n`;
+        ris += `TY  - CASE\n`;
         ris += `TI  - ${document.getElementById('title_ti_Entscheidung').value}\n`;
         ris += `DA  - ${document.getElementById('date_da_Entscheidung').value}\n`;
         ris += `A2  - ${document.getElementById('fundstelle_a2_Entscheidung').value}\n`;
