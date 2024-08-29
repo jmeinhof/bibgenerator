@@ -46,7 +46,7 @@ function generateRIS() {
     let ris = '';
 
     if (selectedOption === 'Gesetz') {
-        ris += `TY  - ${document.getElementById('type_ty_Gesetz').value}\n`;
+        ris += `TY  - STAT\n`;
         ris += `TI  - ${document.getElementById('title_ti_Gesetz').value}\n`;
         ris += `DA  - ${document.getElementById('date_da_Gesetz').value}\n`;
         ris += `T2  - ${document.getElementById('title2_t2_Gesetz').value}\n`;
