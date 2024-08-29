@@ -1,5 +1,9 @@
 let selectedOption = 'Gesetz'; // Set default option to 'Gesetz'
-let inputValues = {}; // Object to store input values
+let inputValues = {
+    'Gesetz': {},
+    'Gesetzentwurf': {},
+    'Entscheidung': {}
+}; // Object to store input values for each option
 
 window.onload = function() {
     setOption('Gesetz'); // Automatically select "Gesetz" on page load
@@ -51,7 +55,9 @@ function updateInputValues() {
 
     fields.forEach(id => {
         const element = document.getElementById(id);
-        inputValues[id] = element ? element.value : '';
+        if (element) {
+            inputValues[selectedOption][id] = element.value;
+        }
     });
 
     generateRIS(); // Update RIS output on input change
@@ -62,10 +68,10 @@ function saveCurrentInputValues() {
 }
 
 function restoreInputValues() {
-    for (const id in inputValues) {
+    for (const id in inputValues[selectedOption]) {
         const element = document.getElementById(id);
         if (element) {
-            element.value = inputValues[id] || ''; // Restore saved value or use empty string if not saved
+            element.value = inputValues[selectedOption][id] || ''; // Restore saved value or use empty string if not saved
         }
     }
 }
