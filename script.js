@@ -1,60 +1,64 @@
-let selectedOption = 'option1'; // Set default option to 'option1'
+let selectedOption = 'A'; // Set default option to 'A'
 
 window.onload = function() {
-    setOption('option1'); // Automatically select "option1" on page load
+    setOption('A'); // Automatically select "A" on page load
 
-    // Add event listeners for real-time RIS generation
-    for (let i = 1; i <= 11; i++) {
-        document.getElementById(`inputField${i}`).addEventListener('input', generateRIS);
-    }
+    // Add event listeners for real-time BibTeX generation
+    document.getElementById('author').addEventListener('input', generateBibTeX);
+    document.getElementById('authority').addEventListener('input', generateBibTeX);
+    document.getElementById('title').addEventListener('input', generateBibTeX);
+    document.getElementById('year').addEventListener('input', generateBibTeX);
 };
 
 function setOption(option) {
-    selectedOption = option;
+    const buttonA = document.getElementById('buttonA');
+    const buttonB = document.getElementById('buttonB');
+    const authorInput = document.getElementById('author-input');
+    const authorityInput = document.getElementById('authority-input');
 
-    // Update active button
-    const buttons = document.querySelectorAll('.option-button');
-    buttons.forEach(button => button.classList.remove('active'));
-    document.getElementById(`button${option.match(/\d+/)[0]}`).classList.add('active');
-
-    // Show corresponding input fields based on the selected option
-    for (let i = 1; i <= 11; i++) {
-        document.getElementById(`input${i}`).style.display = 'none';
+    if (option === 'A') {
+        selectedOption = 'A';
+        buttonA.classList.add('active');
+        buttonB.classList.remove('active');
+        authorInput.style.display = 'block';
+        authorityInput.style.display = 'none';
+    } else if (option === 'B') {
+        selectedOption = 'B';
+        buttonA.classList.remove('active');
+        buttonB.classList.add('active');
+        authorInput.style.display = 'none';
+        authorityInput.style.display = 'block';
     }
 
-    if (option === 'option1') {
-        // Show relevant fields for option 1
-        document.getElementById('input1').style.display = 'block';
-        document.getElementById('input2').style.display = 'block';
-    } else if (option === 'option2') {
-        // Show relevant fields for option 2
-        document.getElementById('input3').style.display = 'block';
-        document.getElementById('input4').style.display = 'block';
-    }
-    // Add more conditions for other options...
-    // Optionally, include different fields based on selected option
-    generateRIS(); // Update RIS output whenever the option is changed
+    generateBibTeX(); // Update BibTeX output whenever the option is changed
 }
 
-function generateRIS() {
-    let ris = `TY  - ${selectedOption}\n`;
-
-    for (let i = 1; i <= 11; i++) {
-        const inputValue = document.getElementById(`inputField${i}`).value;
-        if (inputValue) {
-            ris += `Field${i} - ${inputValue}\n`;
-        }
+function generateBibTeX() {
+    let authorOrAuthority = '';
+    
+    if (selectedOption === 'A') {
+        authorOrAuthority = document.getElementById('author').value;
+    } else if (selectedOption === 'B') {
+        authorOrAuthority = document.getElementById('authority').value;
     }
+    
+    const title = document.getElementById('title').value;
+    const year = document.getElementById('year').value;
 
-    ris += `ER  - \n`; // End of RIS entry
+    // Create a simple BibTeX entry
+    let bibtex = `@article{,\n`;
+    bibtex += `  author = {${authorOrAuthority}},\n`;
+    bibtex += `  title = {${title}},\n`;
+    bibtex += `  year = {${year}}\n`;
+    bibtex += `}`;
 
-    document.getElementById('ris-output').value = ris;
+    document.getElementById('bibtex-output').value = bibtex;
 }
 
-function copyRIS() {
-    generateRIS(); // Ensure the RIS is up-to-date
-    const risOutput = document.getElementById('ris-output');
-    risOutput.select();
+function copyBibTeX() {
+    generateBibTeX(); // Ensure the BibTeX is up-to-date
+    const bibtexOutput = document.getElementById('bibtex-output');
+    bibtexOutput.select();
     document.execCommand('copy');
 
     // Show the notification
