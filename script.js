@@ -87,7 +87,6 @@ function generatePlain() {
         plain += `${getElementValue('title2_t2_Gesetz')} `;
         plain += `vom ${getElementValue('volume_vl_Gesetz')}, `;
         plain += `${getElementValue('startpage_sp_Gesetz')}.`;
-
         const fullDate = getElementValue('date_da_Gesetz');
         const yearFromDate = extractYear(fullDate); // Extracts the last 4 characters, assuming "29 August 2024" format
         pcite += `(${getElementValue('title_short_la_Gesetz')}, ${yearFromDate})`;
@@ -96,7 +95,6 @@ function generatePlain() {
         plain += `${getElementValue('title_ti_Gesetzentwurf')}, `;
         plain += `${getElementValue('aktenzeichen_m1_Gesetzentwurf')} `;
         plain += `vom ${getElementValue('date_da_Gesetzentwurf')}.`;
-
         const fullDate = getElementValue('date_da_Gesetzentwurf');
         const yearFromDate = extractYear(fullDate); // Extracts the last 4 characters, assuming "29 August 2024" format
         pcite += `(${getElementValue('title3_t3_Gesetzentwurf')}, ${yearFromDate})`;
@@ -111,7 +109,6 @@ function generatePlain() {
             plain += `, ${getElementValue('startpage_sp_Entscheidung')}`;
         }
         plain += '.';
-        
         const fullDate = getElementValue('date_da_Entscheidung');
         const yearFromDate = extractYear(fullDate); // Extracts the last 4 characters, assuming "29 August 2024" format
         pcite += `(${getElementValue('publisher_pb_Entscheidung')}, ${yearFromDate})`;
