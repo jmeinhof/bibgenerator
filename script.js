@@ -126,15 +126,23 @@ function extractYear(dateString) {
 function copyRIS() {
     generateRIS(); // Ensure the RIS is up-to-date
     const risOutput = document.getElementById('ris-output').value;
+    const copyButton = document.querySelector('.copy-ris-button');
 
     navigator.clipboard.writeText(risOutput).then(() => {
-        // Show the notification
-        const notification = document.getElementById('copy-notification');
-        notification.style.display = 'block';
+        // Store the original button text and classes
+        const originalText = copyButton.textContent;
+        const originalClass = copyButton.className;
 
-        // Fade out the notification after 2 seconds
+        // Change the button text to "Copied to Clipboard!" and apply the green class
+        copyButton.textContent = 'Copied to Clipboard!';
+        copyButton.classList.add('button-copied');
+        copyButton.disabled = true;
+
+        // Reset the button text and color after 2 seconds
         setTimeout(() => {
-            notification.style.display = 'none';
+            copyButton.textContent = originalText;
+            copyButton.className = originalClass; // Restore original classes
+            copyButton.disabled = false;
         }, 2000);
     }).catch(err => {
         console.error('Failed to copy: ', err);
