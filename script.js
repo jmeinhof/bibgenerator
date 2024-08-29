@@ -17,7 +17,7 @@ window.onload = function() {
 };
 
 function setOption(option) {
-    const buttonA = document.getElementById('buttonA');
+    const buttonGesetz = document.getElementById('buttonGesetz');
     const buttonB = document.getElementById('buttonB');
     const authorInput = document.getElementById('author-input');
     const authorityInput = document.getElementById('authority-input');
@@ -30,7 +30,7 @@ function setOption(option) {
         authorityInput.style.display = 'none';
     } else if (option === 'B') {
         selectedOption = 'B';
-        buttonA.classList.remove('active');
+        buttonGesetz.classList.remove('active');
         buttonB.classList.add('active');
         authorInput.style.display = 'none';
         authorityInput.style.display = 'block';
